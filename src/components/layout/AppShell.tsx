@@ -113,6 +113,14 @@ export function AppShell() {
                 <DropdownMenuItem onClick={() => navigate({ to: "/clubs" })}>
                   <Users className="mr-2 h-4 w-4" /> Browse clubs
                 </DropdownMenuItem>
+                {canAdmin ? (
+                  <DropdownMenuItem
+                    onClick={() => navigate({ to: isAdmin ? "/discover" : "/admin" })}
+                  >
+                    <LayoutDashboard className="mr-2 h-4 w-4" />
+                    {isAdmin ? "Switch to Student view" : "Switch to Admin view"}
+                  </DropdownMenuItem>
+                ) : null}
                 <DropdownMenuSeparator />
                 <DropdownMenuItem
                   onClick={async () => {
