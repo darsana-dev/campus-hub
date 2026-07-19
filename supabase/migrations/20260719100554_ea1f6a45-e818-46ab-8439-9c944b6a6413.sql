@@ -1,0 +1,1 @@
+REVOKE ALL ON FUNCTION public.sync_profile_role_on_membership() FROM PUBLIC, anon, authenticated;
