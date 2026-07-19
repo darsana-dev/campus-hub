@@ -2,6 +2,7 @@ import { Link, Outlet, useRouterState, useNavigate } from "@tanstack/react-route
 import { Compass, Ticket, Award, User as UserIcon, LayoutDashboard, CalendarDays, Users, Settings, LogOut } from "lucide-react";
 import { Logo } from "@/components/brand/Logo";
 import { useAuth, signOut } from "@/hooks/use-auth";
+import { useMyRole } from "@/hooks/use-my-role";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -32,6 +33,8 @@ export function AppShell() {
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   const navigate = useNavigate();
   const { user } = useAuth();
+  const { data: myRole } = useMyRole();
+  const canAdmin = (myRole?.adminClubs.length ?? 0) > 0;
   const isAdmin = pathname.startsWith("/admin");
   const items = isAdmin ? adminNav : studentNav;
 
@@ -69,6 +72,7 @@ export function AppShell() {
             </nav>
           </div>
           <div className="flex items-center gap-2">
+            {canAdmin ? (
             <div className="hidden rounded-lg border border-border bg-secondary/60 p-0.5 sm:flex">
               <button
                 onClick={() => navigate({ to: "/discover" })}
@@ -89,6 +93,7 @@ export function AppShell() {
                 Admin
               </button>
             </div>
+            ) : null}
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="ghost" size="sm" className="h-10 gap-2 pl-1 pr-2">
@@ -108,6 +113,14 @@ export function AppShell() {
                 <DropdownMenuItem onClick={() => navigate({ to: "/clubs" })}>
                   <Users className="mr-2 h-4 w-4" /> Browse clubs
                 </DropdownMenuItem>
+                {canAdmin ? (
+                  <DropdownMenuItem
+                    onClick={() => navigate({ to: isAdmin ? "/discover" : "/admin" })}
+                  >
+                    <LayoutDashboard className="mr-2 h-4 w-4" />
+                    {isAdmin ? "Switch to Student view" : "Switch to Admin view"}
+                  </DropdownMenuItem>
+                ) : null}
                 <DropdownMenuSeparator />
                 <DropdownMenuItem
                   onClick={async () => {

@@ -155,6 +155,7 @@ export type Database = {
       events: {
         Row: {
           capacity: number | null
+          category: string | null
           club_id: string
           cover_url: string | null
           created_at: string
@@ -163,12 +164,15 @@ export type Database = {
           ends_at: string | null
           id: string
           location: string | null
+          short_description: string | null
           starts_at: string
+          status: Database["public"]["Enums"]["event_status"]
           title: string
           updated_at: string
         }
         Insert: {
           capacity?: number | null
+          category?: string | null
           club_id: string
           cover_url?: string | null
           created_at?: string
@@ -177,12 +181,15 @@ export type Database = {
           ends_at?: string | null
           id?: string
           location?: string | null
+          short_description?: string | null
           starts_at: string
+          status?: Database["public"]["Enums"]["event_status"]
           title: string
           updated_at?: string
         }
         Update: {
           capacity?: number | null
+          category?: string | null
           club_id?: string
           cover_url?: string | null
           created_at?: string
@@ -191,7 +198,9 @@ export type Database = {
           ends_at?: string | null
           id?: string
           location?: string | null
+          short_description?: string | null
           starts_at?: string
+          status?: Database["public"]["Enums"]["event_status"]
           title?: string
           updated_at?: string
         }
@@ -212,6 +221,7 @@ export type Database = {
           created_at: string
           full_name: string | null
           id: string
+          role: Database["public"]["Enums"]["profile_role"]
           university: string | null
           updated_at: string
         }
@@ -221,6 +231,7 @@ export type Database = {
           created_at?: string
           full_name?: string | null
           id: string
+          role?: Database["public"]["Enums"]["profile_role"]
           university?: string | null
           updated_at?: string
         }
@@ -230,6 +241,7 @@ export type Database = {
           created_at?: string
           full_name?: string | null
           id?: string
+          role?: Database["public"]["Enums"]["profile_role"]
           university?: string | null
           updated_at?: string
         }
@@ -240,6 +252,7 @@ export type Database = {
           created_at: string
           event_id: string
           id: string
+          response: string | null
           status: Database["public"]["Enums"]["registration_status"]
           updated_at: string
           user_id: string
@@ -248,6 +261,7 @@ export type Database = {
           created_at?: string
           event_id: string
           id?: string
+          response?: string | null
           status?: Database["public"]["Enums"]["registration_status"]
           updated_at?: string
           user_id: string
@@ -256,6 +270,7 @@ export type Database = {
           created_at?: string
           event_id?: string
           id?: string
+          response?: string | null
           status?: Database["public"]["Enums"]["registration_status"]
           updated_at?: string
           user_id?: string
@@ -286,6 +301,8 @@ export type Database = {
     }
     Enums: {
       club_role: "admin" | "member"
+      event_status: "draft" | "published"
+      profile_role: "student" | "admin"
       registration_status:
         | "registered"
         | "waitlisted"
@@ -419,6 +436,8 @@ export const Constants = {
   public: {
     Enums: {
       club_role: ["admin", "member"],
+      event_status: ["draft", "published"],
+      profile_role: ["student", "admin"],
       registration_status: [
         "registered",
         "waitlisted",
